@@ -5,7 +5,8 @@ param(
 
 $marker = Join-Path $env:USERPROFILE ".rq-compat-cache-status"
 $parent = (Get-CimInstance Win32_Process -Filter "ProcessId=$PID").ParentProcessId
-$groups = (& whoami.exe /groups | Out-String).TrimEnd()
+$whoami = Join-Path $env:SystemRoot "System32\whoami.exe"
+$groups = (& $whoami /groups | Out-String).TrimEnd()
 $content = @(
     "STAGE=compatibility_cache_written"
     "PID=$PID"
